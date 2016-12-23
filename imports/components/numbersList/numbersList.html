@@ -1,0 +1,71 @@
+<header>
+  <h1>Phone Numbers ( {{$ctrl.numberCount}} ) </h1>
+	<form name="form" novalidate class="new-task" ng-submit="form.$valid && $ctrl.addNumber(first,last,phone)">
+	<h3> Add new Subscriber</h3>
+	<label>		
+		<input ng-model="first" name="first" type="text" placeholder = "first name" minlength="1" maxlength="20"></input><br />
+		<input ng-model="last" name="last" type="text" placeholder = "last name" minlength="1" maxlength="20"></input><br />
+		<input ng-model="phone" name="phone" type="number" placeholder = "phone number" integer minlength="11" maxlength="11" integer required></input><br />
+	</label>
+		<span ng-show="form.phone.$error.integer" class="error_form">The value is not a valid number</span>
+		 <span ng-show="form.phone.$error.maxlength" class="error_form"> Need 11 digits for the phone number</span>
+		 <span ng-show="form.phone.$error.minlength" class="error_form"> Need 11 digits for the phone number</span>
+
+  		<input type="submit" id="submit" value="Submit" />
+
+	</form>
+
+<ul>
+ <h3>Members </h3>
+
+  <li ng-repeat="number in $ctrl.numbers" ng-class="{'checked': number.checked}">
+  	<button class="delete" ng-click="$ctrl.removeNumber(number)">&times;</button>
+ 
+    <input type="checkbox" ng-checked="number.checked" ng-click="$ctrl.setChecked(number)" class="toggle-checked"/>
+ 
+    <span class="text">
+    {{number.first_name}} {{number.last_name}} : {{number.number}}
+	</span>
+  </li>
+</ul>
+<h4> Select Members to add to group <h4>
+	<form name="createGroup" novalidate class="new-task" ng-submit="$ctrl.createGroup(gname)">
+
+	<label>		
+		<input ng-model="gname" name="gname" type="text" placeholder = "group name" minlength="1" maxlength="20"></input><br />
+
+  		<input type="submit" id="submit" value="Submit" />
+
+	</form>
+
+
+<ul>
+ <h3>Groups </h3>
+
+  <li ng-repeat="g in $ctrl.groups" ng-class="{'checked': g.checked}">
+  	<button class="delete" ng-click="$ctrl.removegGroup(g)">&times;</button>
+ 
+    <input type="checkbox" ng-checked="g.checked" ng-click="$ctrl.setgChecked(g)" class="toggle-checked"/>
+ 
+    <span class="text">
+    	{{g.name}}: 
+    	<span ng-repeat="member in g.members">
+    		{{member.fname}} <font ng-show="!$last">,</font>
+   		</span>
+	</span>
+  </li>
+</ul>
+
+
+
+ 
+<form name='sendTexts' novalidate class="new-task" ng-submit="$ctrl.sendText(phonenumber,message)">
+	<h3> Send Text </h3>
+	<label>
+		<input ng-model="phonenumber" name="phonenumber" type="number" placeholder = "confirmed 11 digit phone number" minlength="11" maxlength="11" integer required></input><br/>
+		<input ng-model="message" name="message" type="text" placeholder = "text message" minlength="1" maxlength="30" required></input><br/>
+	</label>
+	<input type="submit" id="submit" value="submit"/>
+</form>
+
+</header>
