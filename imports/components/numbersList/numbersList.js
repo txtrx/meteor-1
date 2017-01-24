@@ -3,6 +3,7 @@ import angularMeteor from 'angular-meteor';
 import { Numbers } from '../../api/numbers.js';
 import { Groups } from '../../api/numbers.js';
 import { Responses } from '../../api/numbers.js';
+import { Messages } from '../../api/numbers.js';
 
 import template from './numbersList.html';
  
@@ -14,7 +15,10 @@ class TodosListCtrl {
     $scope.last = '';
     $scope.phonenumber = '';
     $scope.message = '';
+    $scope.message2 = '';
     $scope.gname = '';
+    $scope.group = '';
+    $scope.Show_Home = true;
     this.$scope=$scope;
 
     this.helpers({
@@ -23,6 +27,9 @@ class TodosListCtrl {
       },
       groups() {
         return Groups.find({});
+      },
+      responses() {
+        return Responses.find({});
       },
 
     numberCount() {
@@ -57,6 +64,26 @@ class TodosListCtrl {
     });
     this.$scope.phonenumber = '';
     this.$scope.message = '';
+
+  }
+
+  sendGroupText(message2){
+    console.log('grouptext?');
+    var checked = Groups.find({ "checked" : true } );
+    var numbers = [];
+    checked.forEach(function(g){
+      for (var i=0; i<g.members.length;i++) 
+      {
+        console.log(g.members[i]['number']);
+        Meteor.call('sendSMS', '+' + g.members[i]['number'], message2, function(err,response) {
+        if(err) {
+          return;
+        }
+        console.log(response);
+        });
+      } 
+    });
+    this.$scope.message2 = '';
 
   }
 
@@ -95,6 +122,17 @@ class TodosListCtrl {
  
   removegGroup(g) {
     Groups.remove(g._id);
+  }
+
+  updateDB(){
+    //messages
+    console.log('updating');
+    Meteor.call('updateDB', function(err,response) {
+        if(err) {
+          return;
+        }
+        });
+
   }
 
 }

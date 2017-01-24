@@ -1,0 +1,18 @@
+<template name="Response">
+<header>
+
+ <h3>Responses </h3>
+
+  <li ng-repeat="r in $ctrl.responses" ng-class="{'checked': number.checked}">
+
+    <input type="checkbox" ng-checked="r.checked" ng-click="$ctrl.setChecked(r)" class="toggle-checked"/>
+ 
+    <span class="text">
+    {{r}} 
+	</span>
+  </li>
+
+
+
+</header>
+<template>

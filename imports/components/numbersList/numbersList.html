@@ -1,4 +1,19 @@
+<!-- Latest compiled and minified CSS -->
+<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
+
+<!-- Optional theme -->
+<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap-theme.min.css" integrity="sha384-rHyoN1iRsVXV4nD0JutlnGaslCJuC7uwjduW9SVrLvRYooPp2bWYgmgJQIXwl/Sp" crossorigin="anonymous">
+
+<!-- Latest compiled and minified JavaScript -->
+<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js" integrity="sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa" crossorigin="anonymous"></script>
+
 <header>
+
+	<ul class="nav nav-pills nav-justified">
+	  <li role="presentation" ng-class="{'active': Show_Home}"  ng-click="Show_Home = true"><a>Home</a></li>
+	  <li role="presentation" ng-class="{'active': !Show_Home}" ng-click="Show_Home = false"><a>Responses</a></li>
+	</ul>
+<div ng-show='Show_Home'>
   <h1>Phone Numbers ( {{$ctrl.numberCount}} ) </h1>
 	<form name="form" novalidate class="new-task" ng-submit="form.$valid && $ctrl.addNumber(first,last,phone)">
 	<h3> Add new Subscriber</h3>
@@ -58,6 +73,15 @@
 
 
 
+
+<form name='sendGroupTexts' novalidate class="new-task" ng-submit="$ctrl.sendGroupText(message2)">
+	<h3> Send Group Text </h3>
+	<label>
+		<input ng-model="message2" name="message2" type="text" placeholder = "text message to send to selected groups" minlength="1" maxlength="30" required></input><br/>
+	</label>
+	<input type="submit" id="submit" value="submit"/>
+</form>
+
  
 <form name='sendTexts' novalidate class="new-task" ng-submit="$ctrl.sendText(phonenumber,message)">
 	<h3> Send Text </h3>
@@ -67,5 +91,23 @@
 	</label>
 	<input type="submit" id="submit" value="submit"/>
 </form>
+<br>
+<br>
+<br>
+<center>
+<span class="btn btn-danger" ng-click="$ctrl.updateDB()">Update MongoDB</span>
+</center>
+</div>
+<div ng-hide='Show_Home'>
+	<ul>
+	  <h3>Responses </h3>
 
+	  <li ng-repeat="r in $ctrl.responses">
+	 
+	    <span class="text">
+	    {{r.user}} {{r.createdAt | date:'medium'}} : {{r.response}} 
+		</span>
+	  </li>
+	</ul>
+</div>
 </header>
